@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Wallet — Financial Simulation Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Hello Overlay -->
+    <div class="hello-overlay" id="helloOverlay">
+        <span class="hello-text">Future Wallet</span>
+    </div>
+
+    <!-- Green Line (scroll progress) -->
+    <div class="scroll-line" id="scrollLine"></div>
+
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a class="header-logo" href="#">
+                <span class="logo-accent">Future</span> Wallet
+            </a>
+            <nav class="header-nav">
+                <a href="#simulation">Simulation</a>
+                <a href="#charts">Analytics</a>
+                <a href="#branch">What-If</a>
+                <a href="#events">Events</a>
+            </nav>
+            <div class="header-badge">DATAFEST'26</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-sidebar-left">
+            <div class="sidebar-line"></div>
+            <div class="sidebar-label">Financial Simulation Engine</div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag">High-Fidelity Projection Engine</div>
+            <h1 class="hero-title">
+                <span class="title-line">Simulate Your</span>
+                <span class="title-line accent">Financial Future</span>
+            </h1>
+            <p class="hero-desc">Deterministic day-by-day financial modeling with multi-currency dynamics, asset portfolio management, and behavioral metrics.</p>
+            <div class="hero-actions">
+                <button class="magnetic-btn primary" id="heroRunBtn" onclick="document.getElementById('simulation').scrollIntoView({behavior:'smooth'})">
+                    <span>Start Simulation</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="5">0</span><span class="stat-suffix">+</span>
+                    <span class="stat-label">Currencies</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="3650">0</span>
+                    <span class="stat-label">Max Horizon</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="9">0</span>
+                    <span class="stat-label">DAG Layers</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-sidebar-right">
+            <span class="sidebar-vertical-text">Future Wallet v1.0</span>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Scroll to configure</span>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>MULTI-CURRENCY</span><span class="marquee-dot"></span>
+                <span>DETERMINISTIC</span><span class="marquee-dot"></span>
+                <span>DAG-RESOLVED</span><span class="marquee-dot"></span>
+                <span>CREDIT SCORING</span><span class="marquee-dot"></span>
+                <span>ASSET LIQUIDATION</span><span class="marquee-dot"></span>
+                <span>PROGRESSIVE TAX</span><span class="marquee-dot"></span>
+                <span>WHAT-IF BRANCHING</span><span class="marquee-dot"></span>
+                <span>MULTI-CURRENCY</span><span class="marquee-dot"></span>
+                <span>DETERMINISTIC</span><span class="marquee-dot"></span>
+                <span>DAG-RESOLVED</span><span class="marquee-dot"></span>
+                <span>CREDIT SCORING</span><span class="marquee-dot"></span>
+                <span>ASSET LIQUIDATION</span><span class="marquee-dot"></span>
+                <span>PROGRESSIVE TAX</span><span class="marquee-dot"></span>
+                <span>WHAT-IF BRANCHING</span><span class="marquee-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulation Config Section -->
+    <section class="config-section" id="simulation">
+        <div class="section-header-row">
+            <div class="section-pill">01</div>
+            <h2 class="section-title">Configure <span class="accent">Scenario</span></h2>
+        </div>
+
+        <div class="config-grid">
+            <!-- Base Settings Card -->
+            <div class="config-card">
+                <div class="card-glow"></div>
+                <h3 class="config-card-title">Base Settings</h3>
+                <div class="field-grid">
+                    <div class="field">
+                        <label>Starting Balance</label>
+                        <input type="number" id="balance" value="5000">
+                    </div>
+                    <div class="field">
+                        <label>Base Currency</label>
+                        <select id="currency">
+                            <option value="USD" selected>USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="PKR">PKR</option>
+                            <option value="JPY">JPY</option>
+                        </select>
+                    </div>
+                    <div class="field full-width">
+                        <label>Simulation Horizon</label>
+                        <input type="range" id="horizon" min="30" max="3650" value="365" class="lime-range">
+                        <div class="range-label"><span id="horizonLabel">365</span> days</div>
+                    </div>
+                    <div class="field">
+                        <label>Random Seed</label>
+                        <input type="number" id="seed" value="42">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Income Streams Card -->
+            <div class="config-card">
+                <div class="card-glow"></div>
+                <div class="card-title-row">
+                    <h3 class="config-card-title income-accent">Income Streams</h3>
+                    <button class="pill-btn income-accent" onclick="addRow('income')">+ Add</button>
+                </div>
+                <div id="incomeRows" class="rows-container"></div>
+            </div>
+
+            <!-- Expenses Card -->
+            <div class="config-card">
+                <div class="card-glow"></div>
+                <div class="card-title-row">
+                    <h3 class="config-card-title expense-accent">Expenses</h3>
+                    <button class="pill-btn expense-accent" onclick="addRow('expense')">+ Add</button>
+                </div>
+                <div id="expenseRows" class="rows-container"></div>
+            </div>
+
+            <!-- Debts Card -->
+            <div class="config-card">
+                <div class="card-glow"></div>
+                <div class="card-title-row">
+                    <h3 class="config-card-title debt-accent">Debts</h3>
+                    <button class="pill-btn debt-accent" onclick="addRow('debt')">+ Add</button>
+                </div>
+                <div id="debtRows" class="rows-container"></div>
+            </div>
+
+            <!-- Assets Card -->
+            <div class="config-card span-2">
+                <div class="card-glow"></div>
+                <div class="card-title-row">
+                    <h3 class="config-card-title asset-accent">Assets</h3>
+                    <button class="pill-btn asset-accent" onclick="addRow('asset')">+ Add</button>
+                </div>
+                <div id="assetRows" class="rows-container"></div>
+            </div>
+        </div>
+
+        <!-- Run Button -->
+        <div class="run-btn-container">
+            <button class="magnetic-btn primary large" id="runBtn" onclick="runSimulation()">
+                <span>Run Simulation</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Results: Summary Cards -->
+    <section class="results-section" id="results" style="display:none;">
+        <div class="section-header-row">
+            <div class="section-pill">02</div>
+            <h2 class="section-title">Simulation <span class="accent">Results</span></h2>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card glow-lime">
+                <div class="summary-icon">&#128176;</div>
+                <div class="summary-label">Final Balance</div>
+                <div class="summary-value" id="summFinalBalance">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">&#128200;</div>
+                <div class="summary-label">Net Worth</div>
+                <div class="summary-value" id="summNetWorth">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">&#9888;&#65039;</div>
+                <div class="summary-label">Collapse Probability</div>
+                <div class="summary-value" id="summCollapseProb">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">&#128197;</div>
+                <div class="summary-label">Collapse Timing</div>
+                <div class="summary-value" id="summCollapseTiming">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">&#127775;</div>
+                <div class="summary-label">Credit Score</div>
+                <div class="summary-value" id="summCreditScore">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon" id="summVibeIcon">&#128640;</div>
+                <div class="summary-label">Financial Vibe</div>
+                <div class="summary-value" id="summVibe">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon" id="summPetIcon">&#128049;</div>
+                <div class="summary-label">Pet State</div>
+                <div class="summary-value" id="summPet">—</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">&#128170;</div>
+                <div class="summary-label">Shock Resilience</div>
+                <div class="summary-value" id="summSRI">—</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Divider -->
+    <div class="marquee-section small-marquee" id="chartMarquee" style="display:none;">
+        <div class="marquee-track reverse">
+            <div class="marquee-content">
+                <span>BALANCE</span><span class="marquee-dot"></span>
+                <span>NET WORTH</span><span class="marquee-dot"></span>
+                <span>CREDIT SCORE</span><span class="marquee-dot"></span>
+                <span>ASSETS</span><span class="marquee-dot"></span>
+                <span>ANALYTICS</span><span class="marquee-dot"></span>
+                <span>BALANCE</span><span class="marquee-dot"></span>
+                <span>NET WORTH</span><span class="marquee-dot"></span>
+                <span>CREDIT SCORE</span><span class="marquee-dot"></span>
+                <span>ASSETS</span><span class="marquee-dot"></span>
+                <span>ANALYTICS</span><span class="marquee-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <section class="charts-section" id="charts" style="display:none;">
+        <div class="section-header-row">
+            <div class="section-pill">03</div>
+            <h2 class="section-title">Visual <span class="accent">Analytics</span></h2>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="card-glow"></div>
+                <h3 class="chart-title">Balance Projection</h3>
+                <canvas id="chartBalance"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="card-glow"></div>
+                <h3 class="chart-title">Net Worth Evolution</h3>
+                <canvas id="chartNetWorth"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="card-glow"></div>
+                <h3 class="chart-title">Credit Score Tracker</h3>
+                <canvas id="chartCredit"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="card-glow"></div>
+                <h3 class="chart-title">Assets vs Debt</h3>
+                <canvas id="chartAssets"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- What-If Branching Section -->
+    <section class="branch-section" id="branch" style="display:none;">
+        <div class="section-header-row">
+            <div class="section-pill">04</div>
+            <h2 class="section-title">What-If <span class="accent">Branching</span></h2>
+        </div>
+
+        <div class="branch-config">
+            <div class="config-card">
+                <div class="card-glow"></div>
+                <div class="field-grid four-col">
+                    <div class="field">
+                        <label>Branch from Day</label>
+                        <input type="number" id="branchDay" value="90" min="1">
+                    </div>
+                    <div class="field">
+                        <label>Modify Balance (+/-)</label>
+                        <input type="number" id="branchBalance" value="0">
+                    </div>
+                    <div class="field">
+                        <label>Remove Expense (name)</label>
+                        <input type="text" id="branchRemoveExpense" placeholder="e.g. Subscriptions">
+                    </div>
+                    <div class="field">
+                        <label>&nbsp;</label>
+                        <button class="magnetic-btn primary" onclick="runBranch()">
+                            <span>Compare Scenarios</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="branchResults" style="display:none;">
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="card-glow"></div>
+                    <h3 class="chart-title">Balance: Original vs Branched</h3>
+                    <canvas id="chartBranchBalance"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="card-glow"></div>
+                    <h3 class="chart-title">Net Worth: Original vs Branched</h3>
+                    <canvas id="chartBranchNetWorth"></canvas>
+                </div>
+            </div>
+            <div class="branch-comparison-grid" id="branchComparison"></div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events" style="display:none;">
+        <div class="section-header-row">
+            <div class="section-pill">05</div>
+            <h2 class="section-title">Event <span class="accent">Log</span></h2>
+        </div>
+        <div class="events-card">
+            <div class="card-glow"></div>
+            <div class="events-log" id="eventsLog"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-marquee">
+            <div class="marquee-track">
+                <div class="marquee-content footer-text">
+                    <span>FUTURE WALLET</span><span class="marquee-dot"></span>
+                    <span>DATAFEST'26</span><span class="marquee-dot"></span>
+                    <span>FUTURE WALLET</span><span class="marquee-dot"></span>
+                    <span>DATAFEST'26</span><span class="marquee-dot"></span>
+                    <span>FUTURE WALLET</span><span class="marquee-dot"></span>
+                    <span>DATAFEST'26</span><span class="marquee-dot"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Financial Simulation Engine</span>
+            <span class="accent">DATAFEST 2026</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
